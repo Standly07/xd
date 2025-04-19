@@ -14,10 +14,10 @@ from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 from decoders import NetModDecoder, ZivpnDecoder, XrayPBDecoder, ArmodDecoder, HowdyDecoder, VmessDecoder
 
 # Configuración
-TOKEN = os.getenv('BOT_TOKEN', '8038531268:AAEYfd4St3QIbtqmLq-5cRihJ3akQr9c2CM')
+TOKEN = os.getenv('BOT_TOKEN', '8009023703:AAG8dRjvVdVSisKsWb1TTU-4OgnA66eNrrA')
 bot = AsyncTeleBot(TOKEN, parse_mode='HTML')
 start_time = time.time()
-BOT_VERSION = "2.0"
+BOT_VERSION = "1.0"
 OWNER_ID = "7337537905"
 OWNER_USERNAME = "fax_Rin"
 BETA_MODE = False
@@ -37,9 +37,30 @@ def download_file_from_github(url, local_path):
         return True
     return False
 
+def add_channel_buttons(reply_markup=None):
+    if reply_markup is None:
+        reply_markup = InlineKeyboardMarkup()
+    
+    # Verificar si los botones ya existen para no duplicarlos
+    has_channel_buttons = False
+    if reply_markup.keyboard:
+        for row in reply_markup.keyboard:
+            for button in row:
+                if button.url in ["t.me/nexunteam", "t.me/stnxcp"]:
+                    has_channel_buttons = True
+                    break
+    
+    if not has_channel_buttons:
+        reply_markup.row(
+            InlineKeyboardButton("📢 Canal", url="t.me/nexunteam"),
+            InlineKeyboardButton("👥 Grupo", url="t.me/stnxcp")
+        )
+    
+    return reply_markup
+    
 async def update_bot_code():
     try:
-        github_url = "https://raw.githubusercontent.com/tu_usuario/tu_repositorio/main/bot.py"
+        github_url = "https://raw.githubusercontent.com/Standly07/xd/refs/heads/main/bot.py"
         temp_file = "temp_bot.py"
         
         if download_file_from_github(github_url, temp_file):
@@ -73,9 +94,10 @@ BASE_EXTENSIONS = {
     ".phc": ("Scripts/phc.py", ["python3"]),
     ".cloudy": ("Scripts/cloudy.py", ["python3"]),
     ".stk": ("Scripts/stk.py", ["python3"]),
-    ".rez": ("Scripts/rez.py", ["python3"]),
+    ".rez": ("Scripts/rez.js", ["node"]),
+    ".rezl": ("Scripts/rez.js", ["node"]),
     ".sks": ("Scripts/sks.py", ["python3"]),
-    ".ePro": ("Scripts/ePro.py", ["python3"]),
+    ".epro": ("Scripts/ePro.js", ["node"]),
     ".maya": ("Scripts/maya.py", ["python3"]),
     ".aro": ("Scripts/aro.py", ["python3"]),
     ".nm": ("Scripts/netmod.py", ["python3"]),
@@ -83,15 +105,84 @@ BASE_EXTENSIONS = {
     ".ssh": ("Scripts/ssh.py", ["python3"]),
     ".tnl": ("Scripts/tnl.py", ["python3"]),
     ".mrc": ("Scripts/mrc.py", ["python3"]),
+    ".dkarl": ("Scripts/dkarl.py", ["python3"]),
     ".mtl": ("Scripts/mtl.py", ["python3"]),
     ".sksrv": ("Scripts/sksrv.py", ["python3"]),
-    ".ehil": ("Scripts/ehil.py", ["python3"]),
+    ".ehil": ("Scripts/ehil.js", ["node"]),
     ".jez": ("Scripts/jez.py", ["python3"]),
     ".sksplus": ("Scripts/sksplus.py", ["python3"]),
     ".json": ("Scripts/hc.py", ["python3"]),
     ".txt": ("Scripts/npv.py", ["python3"]),
     ".jsonsip": ("Scripts/sip.py", ["python3"]),
     ".mij": ("Scripts/mij.py", ["python3"]),
+    # Nuevas extensiones agregadas
+    ".ost": ("Scripts/ost.py", ["python3"]),
+    ".agn": ("Scripts/agn.py", ["python3"]),
+    ".vpc": ("Scripts/vpc.py", ["python3"]),
+    ".Fɴ": ("Scripts/fn.py", ["python3"]),
+    ".cly": ("Scripts/cly.py", ["python3"]),
+    ".jvi": ("Scripts/jvi.py", ["python3"]),
+    ".jvc": ("Scripts/jvc.py", ["python3"]),
+    ".v2i": ("Scripts/v2i.py", ["python3"]),
+    ".nxp": ("Scripts/nxp.py", ["python3"]),
+    ".sbr": ("Scripts/sbr.py", ["python3"]),
+    ".pb": ("Scripts/pb.py", ["python3"]),
+    ".tut": ("Scripts/tut.py", ["python3"]),
+    ".tmt": ("Scripts/tmt.py", ["python3"]),
+    ".temt": ("Scripts/temt.py", ["python3"]),
+    ".wcm": ("Scripts/wcm.py", ["python3"]),
+    ".tsn": ("Scripts/tsn.py", ["python3"]),
+    ".etun": ("Scripts/etun.py", ["python3"]),
+    ".pxp": ("Scripts/pxp.py", ["python3"]),
+    ".pcx": ("Scripts/pcx.py", ["python3"]),
+    ".aipr": ("Scripts/aipr.py", ["python3"]),
+    ".ace": ("Scripts/ace.py", ["python3"]),
+    ".tsd": ("Scripts/tsd.py", ["python3"]),
+    ".aip": ("Scripts/aip.py", ["python3"]),
+    ".cbp": ("Scripts/cbp.py", ["python3"]),
+    ".cyber": ("Scripts/cyber.py", ["python3"]),
+    ".wt": ("Scripts/wt.py", ["python3"]),
+    ".fks": ("Scripts/fks.py", ["python3"]),
+    ".gv": ("Scripts/gv.py", ["python3"]),
+    ".edan": ("Scripts/edan.py", ["python3"]),
+    ".pkm": ("Scripts/pkm.py", ["python3"]),
+    ".ntr": ("Scripts/ntr.py", ["python3"]),
+    ".act": ("Scripts/act.py", ["python3"]),
+    ".cnet": ("Scripts/cnet.py", ["python3"]),
+    ".gibs": ("Scripts/gibs.py", ["python3"]),
+    ".dvd": ("Scripts/dvd.py", ["python3"]),
+    ".ezi": ("Scripts/ezi.py", ["python3"]),
+    ".ftp": ("Scripts/ftp.py", ["python3"]),
+    ".fthp": ("Scripts/fthp.py", ["python3"]),
+    ".jph": ("Scripts/jph.py", ["python3"]),
+    ".xsks": ("Scripts/xsks.py", ["python3"]),
+    ".ht": ("Scripts/ht.py", ["python3"]),
+    ".ssi": ("Scripts/ssi.py", ["python3"]),
+    ".kt": ("Scripts/kt.py", ["python3"]),
+    ".dvs": ("Scripts/dvs.py", ["python3"]),
+    ".fnet": ("Scripts/fnet.py", ["python3"]),
+    ".mc": ("Scripts/mc.py", ["python3"]),
+    ".hub": ("Scripts/hub.py", ["python3"]),
+    ".grd": ("Scripts/grd.py", ["python3"]),
+    ".hta": ("Scripts/hta.py", ["python3"]),
+    ".eug": ("Scripts/eug.py", ["python3"]),
+    ".sds": ("Scripts/sds.py", ["python3"]),
+    ".htp": ("Scripts/htp.py", ["python3"]),
+    ".bbb": ("Scripts/bbb.py", ["python3"]),
+    ".ccc": ("Scripts/ccc.py", ["python3"]),
+    ".ddd": ("Scripts/ddd.py", ["python3"]),
+    ".eee": ("Scripts/eee.py", ["python3"]),
+    ".cln": ("Scripts/cln.py", ["python3"]),
+    ".cyh": ("Scripts/cyh.py", ["python3"]),
+    ".Tcv2": ("Scripts/tcv2.py", ["python3"]),
+    ".NT": ("Scripts/nt.py", ["python3"]),
+    ".ai": ("Scripts/ai.py", ["python3"]),
+    ".cks": ("Scripts/cks.py", ["python3"]),
+    ".garuda": ("Scripts/garuda.py", ["python3"]),
+    ".tpp": ("Scripts/tpp.py", ["python3"]),
+    ".sky": ("Scripts/sky.py", ["python3"]),
+    ".skyp": ("Scripts/skyp.py", ["python3"]),
+    ".max": ("Scripts/max.py", ["python3"]),
 }
 
 BETA_EXTENSIONS = {
@@ -175,16 +266,18 @@ def check_premium_expiry():
         
 def register_group(group_id, group_title):
     groups = load_json(GROUPS_FILE)
-    group_exists = any(str(group['id']) == str(group_id) for group in groups)
     
-    if not group_exists:
+    # Verificar si el grupo ya existe (comparando strings)
+    if not any(group['id'] == str(group_id) for group in groups):
         new_group = {
-            "id": str(group_id),
+            "id": str(group_id),  # Siempre guardar como string
             "title": group_title,
             "added_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
         groups.append(new_group)
         save_json(GROUPS_FILE, groups)
+        return True
+    return False
 
 def is_group_allowed(group_id):
     groups = load_json(GROUPS_FILE)
@@ -780,20 +873,22 @@ async def process_add_group(message):
     group_identifier = message.text.strip()
     try:
         if group_identifier.lstrip('-').isdigit():
+            # Si es un ID numérico
             group_id = int(group_identifier)
             try:
                 chat = await bot.get_chat(group_id)
-                register_group(chat.id, chat.title)
+                register_group(str(chat.id), chat.title)  # Asegurarse de convertir a string
                 await bot.reply_to(message, f"✅ Grupo añadido: {chat.title} (<code>{chat.id}</code>)")
             except Exception as e:
                 await bot.reply_to(message, f"❌ Error al obtener información del grupo: {str(e)}")
         else:
+            # Si es un username o enlace
             try:
                 chat = await bot.get_chat(group_identifier)
-                register_group(chat.id, chat.title)
+                register_group(str(chat.id), chat.title)  # Asegurarse de convertir a string
                 await bot.reply_to(message, f"✅ Grupo añadido: {chat.title} (<code>{chat.id}</code>)")
             except Exception as e:
-                await bot.reply_to(message, "❌ Formato inválido. Usa:\n- ID numérico (ej: -100123456)\n- @username\n- Enlace de invitación")
+                await bot.reply_to(message, f"❌ Error al obtener información del grupo: {str(e)}")
     except Exception as e:
         await bot.reply_to(message, f"❌ Error: {str(e)}")
 
@@ -960,12 +1055,20 @@ async def handle_document(message):
         result = await execute_decrypt_script(script_name, command, file_path)
         
         if result:
+            keyboard = InlineKeyboardMarkup()
+            keyboard_with_buttons = add_channel_buttons(keyboard)
             await send_long_message(message.chat.id, result, reply_to_message_id=message.message_id)
         
         os.remove(file_path)
             
     except Exception as e:
-        await bot.reply_to(message, f"❌ Error procesando archivo: {str(e)}")
+        keyboard = InlineKeyboardMarkup()
+        keyboard_with_buttons = add_channel_buttons(keyboard)
+        await bot.reply_to(
+            message, 
+            f"❌ Error procesando archivo: {str(e)}",
+            reply_markup=keyboard_with_buttons
+        )
         if 'file_path' in locals() and os.path.exists(file_path):
             os.remove(file_path)
 
@@ -988,6 +1091,8 @@ async def decode_message(message):
         elif text.startswith('vmess://eyJ'):
             final_text = await vmess_decoder.decode(text, user)
         if final_text:
+            keyboard = InlineKeyboardMarkup()
+            keyboard_with_buttons = add_channel_buttons(keyboard)
             await send_long_message(message.chat.id, final_text, reply_to_message_id=message.message_id)
         else:
             await bot.reply_to(message, "❌ Formato no reconocido o error al decodificar")
@@ -996,12 +1101,79 @@ async def decode_message(message):
         error_msg = f"❌ Error procesando mensaje: {str(e)}"
         await send_long_message(message.chat.id, error_msg, reply_to_message_id=message.message_id)
 
+import html
+
 async def send_long_message(chat_id, text, reply_to_message_id=None):
     max_length = 4096
-    for i in range(0, len(text), max_length):
-        part = text[i:i + max_length]
-        await bot.send_message(chat_id, part, reply_to_message_id=reply_to_message_id)
+    keyboard = InlineKeyboardMarkup()
+    keyboard_with_buttons = add_channel_buttons(keyboard)
+    
+    # Primero escapamos todo el texto
+    escaped_text = html.escape(text)
+    
+    # Luego restauramos específicamente las etiquetas <code>, </code>, <b> y </b>
+    allowed_tags = {
+        '&lt;code&gt;': '<code>',
+        '&lt;/code&gt;': '</code>',
+        '&lt;b&gt;': '<b>',
+        '&lt;/b&gt;': '</b>'
+    }
+    
+    # Reemplazamos las versiones escapadas de las etiquetas permitidas
+    for escaped_tag, original_tag in allowed_tags.items():
+        escaped_text = escaped_text.replace(escaped_tag, original_tag)
+    
+    for i in range(0, len(escaped_text), max_length):
+        part = escaped_text[i:i + max_length]
+        await bot.send_message(
+            chat_id, 
+            part, 
+            reply_to_message_id=reply_to_message_id,
+            reply_markup=keyboard_with_buttons if i + max_length >= len(escaped_text) else None,
+            parse_mode='HTML'
+        )
 
+@bot.message_handler(commands=['addgroup'])
+async def add_group_command(message):
+    if not is_admin(message.from_user.id):
+        await bot.reply_to(message, "⛔ Acceso denegado. Solo administradores pueden usar este comando.")
+        return
+    
+    if len(message.text.split()) < 2:
+        await bot.reply_to(message, "❌ Uso incorrecto. Por favor usa:\n<code>/addgroup &lt;ID_grupo&gt;</code> o @username", parse_mode='HTML')
+        return
+    
+    group_identifier = message.text.split()[1].strip()
+    
+    try:
+        chat = await bot.get_chat(group_identifier)
+        
+        if chat.type not in ['group', 'supergroup']:
+            await bot.reply_to(message, "❌ El ID proporcionado no pertenece a un grupo válido.")
+            return
+        
+        if register_group(str(chat.id), chat.title):
+            response = (
+                f"✅ <b>Grupo añadido exitosamente</b>\n\n"
+                f"📌 <b>Nombre:</b> {html.escape(chat.title)}\n"
+                f"🆔 <b>ID:</b> <code>{chat.id}</code>\n"
+                f"👥 <b>Tipo:</b> {chat.type.capitalize()}"
+            )
+            await bot.reply_to(message, response, parse_mode='HTML')
+        else:
+            await bot.reply_to(message, "⚠️ Este grupo ya estaba en la lista de permitidos.")
+        
+    except Exception as e:
+        error_message = (
+            f"❌ <b>Error al agregar el grupo</b>\n\n"
+            f"<code>{html.escape(str(e))}</code>\n\n"
+            "Asegúrate de que:\n"
+            "1. El bot es miembro del grupo\n"
+            "2. El ID o username es correcto\n"
+            "3. Usas el formato: <code>/addgroup &lt;ID&gt;</code> o @username"
+        )
+        await bot.reply_to(message, error_message, parse_mode='HTML')
+                                  
 async def edit_message(chat_id, message_id, text, reply_markup=None):
     max_retries = 2
     for attempt in range(max_retries):
